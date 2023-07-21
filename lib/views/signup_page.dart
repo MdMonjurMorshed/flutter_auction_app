@@ -41,7 +41,7 @@ class SignupPage extends StatelessWidget {
                         'Your account is just few clicks away! Please provide the information bellow to create account')),
               ),
 
-              // Sizedbox for input box and a sending button
+              // Sizedbox for input box and a signup button
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: Column(children: [
