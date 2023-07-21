@@ -16,7 +16,7 @@ class LoginPage extends StatelessWidget {
       body: Center(
         child: SingleChildScrollView(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            // sized box for image
+            // sized box for image view
             SizedBox(
                 height: MediaQuery.of(context).size.height / 3,
                 width: MediaQuery.of(context).size.width / 1.5,
