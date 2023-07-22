@@ -1,4 +1,4 @@
-import 'package:auction_bd24/views/landing_page.dart';
+import 'package:auction_bd24/views/bottombar_view/auction_gellary.dart';
 import 'package:auction_bd24/views/signup_page.dart';
 import 'package:get/get.dart';
 

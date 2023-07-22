@@ -10,7 +10,7 @@ class AppTheme {
 
   static ThemeData appThemeData() {
     return ThemeData(
-      primaryColor: Colors.blue,
-    );
+        primaryColor: Colors.blue,
+        appBarTheme: AppBarTheme(backgroundColor: Colors.purple[400]));
   }
 }
