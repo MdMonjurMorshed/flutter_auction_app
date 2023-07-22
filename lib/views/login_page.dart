@@ -2,7 +2,6 @@ import 'package:auction_bd24/controller/controllers/login_controller.dart';
 import 'package:auction_bd24/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -83,9 +82,6 @@ class LoginPage extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                   child: GestureDetector(
                     onTap: () async {
-                      SharedPreferences loginPref =
-                          await SharedPreferences.getInstance();
-                      loginController.logprf = loginPref.get('isLoggedIn');
                       loginController.loginWithEmail(
                           loginController.loginEmailController.text,
                           loginController.loginPassController.text);
