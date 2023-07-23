@@ -1,10 +1,21 @@
 import 'package:auction_bd24/controller/controllers/login_controller.dart';
+import 'package:auction_bd24/controller/controllers/product_fetch_controller.dart';
+import 'package:auction_bd24/views/myPost_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import '../../controller/controllers/mypost_controller.dart';
+import '../../controller/controllers/productForm_controller.dart';
+import '../../themes/app_theme.dart';
+import '../custom_widgets/bid_product_form.dart';
 
 class LandingPage extends StatelessWidget {
   LandingPage({super.key});
   final loginController = Get.find<LoginController>();
+  final datetimeController = Get.find<ProductFormController>();
+  final productFetchController = Get.find<ProductFetchController>();
+  final mypostController = Get.find<MyPostController>();
 
   @override
   Widget build(BuildContext context) {
@@ -31,132 +42,92 @@ class LandingPage extends StatelessWidget {
                 showDialog(
                     context: context,
                     builder: (context) {
-                      return MyAlertDialog();
-                      // AlertDialog(
-                      //     content: SizedBox(
-                      //         height: height / 3,
-                      //         child: Center(
-                      //           child: SingleChildScrollView(
-                      //             child: Column(
-                      //               children: [
-
-                      //               ],
-                      //             ),
-                      //           ),
-                      //         )));
+                      return ProductForm();
                     });
               },
               child: Icon(Icons.add),
             ),
-          )
+          ),
         ],
       ),
-      body: Center(
-        child: ElevatedButton(onPressed: () {}, child: Text('logout')),
-      ),
-    );
-  }
+      body: Obx(() {
+        if (productFetchController.productList.isNotEmpty) {
+          return ListView.builder(
+              itemCount: productFetchController.productList.length,
+              itemBuilder: (context, index) {
+                final data = productFetchController.productList[index];
+                return Padding(
+                  padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                  child: Container(
+                    // Styling
+                    height: MediaQuery.of(context).size.height / 5,
+                    width: MediaQuery.of(context).size.width / 1.8,
+                    decoration: BoxDecoration(
+                      color: AppTheme.appColor.productTileColor,
+                      boxShadow: [
+                        BoxShadow(
+                            color: AppTheme.appColor.productTileShadowColor!,
+                            spreadRadius: 1,
+                            blurRadius: 4,
+                            offset: Offset(1, 1))
+                      ],
+                      border: Border.all(
+                        color: AppTheme.appColor.productTileBorderColor!,
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
 
-  Widget dialogWidget() {
-    return Text('data');
-  }
-}
+                    // widget is here in the child
 
-class MyAlertDialog extends StatefulWidget {
-  @override
-  _MyAlertDialogState createState() => _MyAlertDialogState();
-}
-
-class _MyAlertDialogState extends State<MyAlertDialog> {
-  // TextEditingController to handle the date and time fields
-  TextEditingController _dateTimeController = TextEditingController();
-
-  // Function to show the date picker
-  Future<void> _selectDate(BuildContext context) async {
-    DateTime currentDate = DateTime.now();
-    print(currentDate);
-
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: currentDate,
-      firstDate: currentDate.subtract(Duration(days: 365)), // One year ago
-      lastDate: currentDate.add(Duration(days: 365)), // One year from now
-    );
-
-    if (picked != null && picked != currentDate) {
-      // Show the time picker after the date is selected
-      _selectTime(context, picked);
-    }
-  }
-
-  // Function to show the time picker
-  Future<void> _selectTime(BuildContext context, DateTime pickedDate) async {
-    TimeOfDay currentTime = TimeOfDay.now();
-
-    TimeOfDay? pickedTime = await showTimePicker(
-      context: context,
-      initialTime: currentTime,
-    );
-
-    if (pickedTime != null) {
-      // Combine the date and time and update the text field
-      DateTime pickedDateTime = DateTime(
-        pickedDate.year,
-        pickedDate.month,
-        pickedDate.day,
-        pickedTime.hour,
-        pickedTime.minute,
-      );
-
-      setState(() {
-        _dateTimeController.text = pickedDateTime.toString();
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Set Date and Time'),
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: <Widget>[
-            TextFormField(
-              controller: _dateTimeController,
-              onTap: () => _selectDate(context),
-              decoration: InputDecoration(
-                labelText: 'Date and Time',
-                hintText: 'Tap to select date and time',
-                prefixIcon: Icon(Icons.calendar_today),
-              ),
-              readOnly: true,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please select date and time';
-                }
-                return null;
-              },
-            ),
-          ],
-        ),
-      ),
-      actions: <Widget>[
-        TextButton(
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Container(
+                            height: height / 5,
+                            width: width / 2.5,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                image: DecorationImage(
+                                  image: NetworkImage(data.productImage),
+                                )),
+                          ),
+                        ),
+                        SizedBox(
+                          height: height / 5,
+                          width: width / 2.2,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("Product Name: ${data.productName}"),
+                              Text("Bid Price: ${data.bidMinPrice}"),
+                              Text("End Date: ${data.bidDateTime}"),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              });
+        } else {
+          return Center(
+            child: Text('No data is available'),
+          );
+        }
+      }),
+      floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
-            Navigator.of(context).pop();
+            mypostController.fetchMyPost();
+            Navigator.push(
+                context,
+                GetPageRoute(
+                    page: () => MyPostPage(),
+                    transition: Transition.fadeIn,
+                    transitionDuration: Duration(milliseconds: 500)));
           },
-          child: Text('Cancel'),
-        ),
-        TextButton(
-          onPressed: () {
-            // Handle form submission here
-            String dateTimeValue = _dateTimeController.text;
-            print('Selected date and time: $dateTimeValue');
-            Navigator.of(context).pop();
-          },
-          child: Text('Save'),
-        ),
-      ],
+          label: Text('My Post')),
     );
   }
 }
