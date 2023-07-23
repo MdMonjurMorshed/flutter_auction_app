@@ -11,6 +11,10 @@ class AppTheme {
   static ThemeData appThemeData() {
     return ThemeData(
         primaryColor: Colors.blue,
-        appBarTheme: AppBarTheme(backgroundColor: Colors.purple[400]));
+        appBarTheme: AppBarTheme(backgroundColor: Colors.purple[400]),
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+            foregroundColor: Colors.white,
+            backgroundColor: Colors.purple[400],
+            elevation: 10));
   }
 }

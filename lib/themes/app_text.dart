@@ -1,6 +1,17 @@
 import 'package:flutter/material.dart';
 
 class AppText {
+  //Global textfield text style starts
+
+  final labelText = TextStyle(color: Colors.purple[400]);
+
+  //Global textfield text style ends
+
+  //Global textbutton text style starts
+  final submiButton = TextStyle(color: Colors.purple[400]);
+  final cancelButton = TextStyle(color: Colors.purple[400]);
+  //Global textbutton text style ends
+
   // Login page theme starts
   final loginHeader = TextStyle(color: Colors.purple[400], fontSize: 25);
   final signUPTextBtn = TextStyle(
