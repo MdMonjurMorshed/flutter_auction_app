@@ -1,4 +1,5 @@
 import 'package:auction_bd24/controller/controllers/login_controller.dart';
+import 'package:auction_bd24/views/bottombar.dart';
 import 'package:auction_bd24/views/bottombar_view/auction_gellary.dart';
 import 'package:auction_bd24/views/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -16,7 +17,7 @@ class AuctionSplash extends StatelessWidget {
         Navigator.pushReplacement(
             context,
             GetPageRoute(
-              page: () => value ? LandingPage() : LoginPage(),
+              page: () => value ? BottomBarPage() : LoginPage(),
             ));
       });
     });
