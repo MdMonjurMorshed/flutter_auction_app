@@ -23,7 +23,7 @@ class ProductFetchController extends GetxController {
             .toList();
       });
     } catch (e) {
-      print(e);
+      print(e.toString());
     }
   }
 }

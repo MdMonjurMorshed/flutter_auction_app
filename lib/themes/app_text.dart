@@ -32,5 +32,22 @@ class AppText {
   final signupButtonText = TextStyle(color: Colors.white);
 
   // signup page theme ends
+
+  // Auction  page starts
+
+  final productLabelText = TextStyle(color: Colors.red, fontSize: 20);
+  final bidButtonText = TextStyle(
+    color: Colors.white,
+  );
+
+  final tableTitleText = TextStyle(fontSize: 20);
+  final tableHeaderText = TextStyle(fontSize: 20);
+  final tableCellText = TextStyle(fontSize: 18);
+
+  final winingGreeting = TextStyle(fontSize: 25, color: Colors.red);
+  final winingDetails = TextStyle(fontSize: 20, color: Colors.red);
+
+  // Auction page ends
+
   AppText();
 }

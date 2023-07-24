@@ -28,5 +28,9 @@ class AppColor {
   final productTileShadowColor = Colors.purple[200];
 
   // auction gellary ends
+
+  // auction page starts
+  final tableBorderColor = Colors.purple[400];
+  // auction page ends
   AppColor();
 }
