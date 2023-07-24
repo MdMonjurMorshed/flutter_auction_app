@@ -1,5 +1,7 @@
+import 'package:auction_bd24/controller/controllers/bidPlaced_fetchController.dart';
 import 'package:auction_bd24/controller/controllers/login_controller.dart';
 import 'package:auction_bd24/controller/controllers/product_fetch_controller.dart';
+import 'package:auction_bd24/views/auction_page.dart';
 import 'package:auction_bd24/views/myPost_page.dart';
 
 import 'package:flutter/material.dart';
@@ -16,6 +18,7 @@ class LandingPage extends StatelessWidget {
   final datetimeController = Get.find<ProductFormController>();
   final productFetchController = Get.find<ProductFetchController>();
   final mypostController = Get.find<MyPostController>();
+  final bidPlacedController = Get.find<BidPlacedFetchController>();
 
   @override
   Widget build(BuildContext context) {
@@ -58,55 +61,71 @@ class LandingPage extends StatelessWidget {
                 final data = productFetchController.productList[index];
                 return Padding(
                   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                  child: Container(
-                    // Styling
-                    height: MediaQuery.of(context).size.height / 5,
-                    width: MediaQuery.of(context).size.width / 1.8,
-                    decoration: BoxDecoration(
-                      color: AppTheme.appColor.productTileColor,
-                      boxShadow: [
-                        BoxShadow(
-                            color: AppTheme.appColor.productTileShadowColor!,
-                            spreadRadius: 1,
-                            blurRadius: 4,
-                            offset: Offset(1, 1))
-                      ],
-                      border: Border.all(
-                        color: AppTheme.appColor.productTileBorderColor!,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          GetPageRoute(
+                              page: () => AuctionPage(
+                                    id: data.productId,
+                                    uId: data.userId,
+                                    price: data.bidMinPrice,
+                                    name: data.productName,
+                                    description: data.productDescription,
+                                    image: data.productImage,
+                                    endDate: data.bidDateTime,
+                                  )));
+                    },
+                    child: Container(
+                      // Styling
+                      height: MediaQuery.of(context).size.height / 5,
+                      width: MediaQuery.of(context).size.width / 1.8,
+                      decoration: BoxDecoration(
+                        color: AppTheme.appColor.productTileColor,
+                        boxShadow: [
+                          BoxShadow(
+                              color: AppTheme.appColor.productTileShadowColor!,
+                              spreadRadius: 1,
+                              blurRadius: 4,
+                              offset: Offset(1, 1))
+                        ],
+                        border: Border.all(
+                          color: AppTheme.appColor.productTileBorderColor!,
+                        ),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
 
-                    // widget is here in the child
+                      // widget is here in the child
 
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Container(
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Container(
+                              height: height / 5,
+                              width: width / 2.5,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  image: DecorationImage(
+                                    image: NetworkImage(data.productImage),
+                                  )),
+                            ),
+                          ),
+                          SizedBox(
                             height: height / 5,
-                            width: width / 2.5,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                image: DecorationImage(
-                                  image: NetworkImage(data.productImage),
-                                )),
+                            width: width / 2.2,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Product Name: ${data.productName}"),
+                                Text("Bid Price: ${data.bidMinPrice}"),
+                                Text("End Date: ${data.bidDateTime}"),
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(
-                          height: height / 5,
-                          width: width / 2.2,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Product Name: ${data.productName}"),
-                              Text("Bid Price: ${data.bidMinPrice}"),
-                              Text("End Date: ${data.bidDateTime}"),
-                            ],
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 );

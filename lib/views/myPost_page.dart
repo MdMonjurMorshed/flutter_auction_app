@@ -10,8 +10,6 @@ class MyPostPage extends StatelessWidget {
   final myPostController = Get.find<MyPostController>();
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
