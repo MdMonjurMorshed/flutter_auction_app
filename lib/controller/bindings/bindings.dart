@@ -21,5 +21,6 @@ class ControllerBindings extends Bindings {
     Get.put(AuctionPageController());
     Get.put(BidPlacedFetchController());
     Get.put(UserController());
+    Get.put(BottombarController());
   }
 }
