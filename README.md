@@ -4,13 +4,14 @@ A new Flutter project.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+## First problem
+The first problem i have faced to start this project is Multidex support problem.
+because i was using cloud_firestore which supports Multidex support.
 
-A few resources to get you started if this is your first Flutter project:
+# Solve of multidex suppost problem
+i have searched in online and found that minsdk 21 will resolve this issue
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Problem of the LoginController
+ i was trying to make user logged in thats why i was using inst3ence of the logincontroller.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
