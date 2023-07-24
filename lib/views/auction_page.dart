@@ -6,7 +6,6 @@ import 'package:auction_bd24/themes/app_theme.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 class AuctionPage extends StatelessWidget {
   final String id;
@@ -58,69 +57,70 @@ class AuctionPage extends StatelessWidget {
           children: [
             // Winner details
             Padding(
-              padding: EdgeInsets.all(0),
-              child: nowDatetime.isAfter(DateTime.parse(endDate))
-                  ? Container(
-                      height: height / 4,
-                      width: width,
-                      child: Center(
-                        child: Obx(() {
-                          List<BidPlaced> anotherList = bidPlacedController
-                              .bidPlacedList
-                              .where((doc) => doc.productId == id)
-                              .toList();
-                          if (anotherList.isNotEmpty) {
-                            double maxBidPrice = anotherList
-                                .map((bid) => bid.bidPrice)
-                                .reduce((value, element) =>
-                                    value > element ? value : element);
-                            BidPlaced maxBidHolder = anotherList.firstWhere(
-                                (element) => element.bidPrice == maxBidPrice);
-                            return Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: width / 1.3,
-                                  height: height / 8,
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: AssetImage(
-                                          'assets/win/winning.jpg',
-                                        ),
-                                        fit: BoxFit.fill),
+                padding: EdgeInsets.all(0),
+                child: Obx(() {
+                  List<BidPlaced> anotherList = bidPlacedController
+                      .bidPlacedList
+                      .where((doc) => doc.productId == id)
+                      .toList();
+                  if (anotherList.isNotEmpty) {
+                    double maxBidPrice = anotherList
+                        .map((bid) => bid.bidPrice)
+                        .reduce((value, element) =>
+                            value > element ? value : element);
+                    BidPlaced maxBidHolder = anotherList.firstWhere(
+                        (element) => element.bidPrice == maxBidPrice);
+                    return nowDatetime.isAfter(DateTime.parse(endDate)) &&
+                            anotherList.isNotEmpty
+                        ? SizedBox(
+                            height: height / 4,
+                            width: width,
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: width / 1.3,
+                                    height: height / 8,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: AssetImage(
+                                            'assets/win/winning.jpg',
+                                          ),
+                                          fit: BoxFit.fill),
+                                    ),
                                   ),
-                                ),
-                                Container(
-                                  width: width,
-                                  child: maxBidHolder.userName != ''
-                                      ? Center(
-                                          child: Text(
-                                            'Congratulations! ${maxBidHolder.userName}',
-                                            style:
-                                                AppTheme.appText.winingGreeting,
+                                  Container(
+                                    width: width,
+                                    child: maxBidHolder.userName != ''
+                                        ? Center(
+                                            child: Text(
+                                              'Congratulations! ${maxBidHolder.userName}',
+                                              style: AppTheme
+                                                  .appText.winingGreeting,
+                                            ),
+                                          )
+                                        : Center(
+                                            child: Text(
+                                              'Congratulations! ${maxBidHolder.userEmail}',
+                                              style: AppTheme
+                                                  .appText.winingGreeting,
+                                            ),
                                           ),
-                                        )
-                                      : Center(
-                                          child: Text(
-                                            'Congratulations! ${maxBidHolder.userEmail}',
-                                            style:
-                                                AppTheme.appText.winingGreeting,
-                                          ),
-                                        ),
-                                ),
-                                Text(
-                                  'You have won this bid at: $maxBidPrice',
-                                  style: AppTheme.appText.winingDetails,
-                                )
-                              ],
-                            );
-                          }
-                          throw 'something went worng';
-                        }),
-                      ),
-                    )
-                  : null,
-            ),
+                                  ),
+                                  Text(
+                                    'You have won this bid at: $maxBidPrice',
+                                    style: AppTheme.appText.winingDetails,
+                                  )
+                                ],
+                              ),
+                            ),
+                          )
+                        : Text('');
+                  }
+
+                  return Text('');
+                })),
 
             // container for image and details
             Padding(
@@ -412,3 +412,19 @@ class AuctionPage extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+// nowDatetime.isAfter(DateTime.parse(endDate)) && 
+//                   ? Container(
+//                       height: height / 4,
+//                       width: width,
+//                       child: Center(
+//                         child: Obx(() {
+//                           
+//                         }),
+//                       ),
+//                     )
+//                   : null,
