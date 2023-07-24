@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BidProduct {
   String productId;
+  String userId;
   String productName;
   String productDescription;
   double bidMinPrice;
@@ -13,7 +14,8 @@ class BidProduct {
       required this.bidMinPrice,
       required this.bidDateTime,
       required this.productImage,
-      required this.productId});
+      required this.productId,
+      required this.userId});
 
   factory BidProduct.fromDocument(DocumentSnapshot<Map<String, dynamic>> doc) {
     return BidProduct(
@@ -22,6 +24,7 @@ class BidProduct {
         bidMinPrice: double.parse(doc['productMinBidPrice']),
         bidDateTime: doc['bidExpiryDate'],
         productImage: doc['productImage'],
-        productId: doc.id);
+        productId: doc.id,
+        userId: doc['userId'] ?? '');
   }
 }
