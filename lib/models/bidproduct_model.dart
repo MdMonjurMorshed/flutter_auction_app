@@ -21,7 +21,8 @@ class BidProduct {
     return BidProduct(
         productName: doc['productName'],
         productDescription: doc['productDescription'],
-        bidMinPrice: double.parse(doc['productMinBidPrice']),
+        bidMinPrice: double.tryParse(
+            doc['productMinBidPrice'].replaceAll(RegExp(r'[^\d.]'), ''))!,
         bidDateTime: doc['bidExpiryDate'],
         productImage: doc['productImage'],
         productId: doc.id,
